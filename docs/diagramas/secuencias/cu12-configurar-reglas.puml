@@ -1,0 +1,32 @@
+@startuml cu12-configurar-reglas
+title ESC-05: CU-12 Configurar las reglas de práctica de un programa (diagrama de secuencia arquitectónico)
+' Participantes: los de la vista de procesos (docs/vistas/02-procesos.md)
+' Verifica: EAC-01 y ADR-007 (reglas como datos), OB-05 (prácticas en curso no cambian)
+autonumber
+
+actor "Director de programa" as dir
+participant "Aplicación web" as web
+participant "API de prácticas" as api
+database "Base de datos" as bd
+
+dir -> web : edita horas mínimas, requisitos y plazos del programa
+web --> dir : muestra un resumen de los cambios para confirmar
+dir -> web : confirma
+web -> api : envía la nueva versión de reglas (JSON / HTTPS, con token institucional)
+api -> api : valida las reglas
+
+break regla inválida, por ejemplo horas mínimas en cero
+  api --> web : rechaza y explica el error (HTTPS)
+  web --> dir : muestra el error
+end
+
+api -> bd : guarda una nueva versión de ReglaPractica vigente desde el periodo siguiente (SQL)
+note right of bd
+  La versión anterior no se modifica: las prácticas
+  en curso conservan sus reglas (OB-05).
+  Es un dato, no un cambio de código (EAC-01, ADR-007)
+end note
+api -> bd : registra el cambio en la bitácora (SQL)
+api --> web : reglas guardadas (HTTPS)
+web --> dir : confirma desde qué periodo aplican
+@enduml

@@ -1,0 +1,46 @@
+@startuml 02-procesos
+!include <C4/C4_Container>
+
+title Vista de procesos (C4, nivel 2): contenedores del Sistema de Gestión de Prácticas Empresariales
+
+LAYOUT_WITH_LEGEND()
+
+Person(estudiante, "Estudiante", "")
+Person(docente, "Docente asesor", "")
+Person(director, "Director de programa", "")
+Person(admin, "Administrador del sistema", "")
+Person_Ext(supervisor, "Supervisor de empresa", "Sin cuenta (RN-04)")
+
+System_Boundary(sistema, "Sistema de Gestión de Prácticas Empresariales") {
+  Container(web, "Aplicación web", "Angular, responsiva", "Interfaz de todos los usuarios, también desde el celular")
+  Container(api, "API de prácticas", "Python, monolito modular (ADR-001)", "Reglas del negocio: postulación, seguimiento, evaluación, actas y reglas")
+  ContainerQueue(broker, "Bróker de mensajes", "RabbitMQ, colas persistentes (ADR-003)", "Verificaciones pendientes y correos por enviar")
+  Container(worker, "Worker de integración", "Python, mismo código de la API (ADR-003)", "Verifica con el SIA, envía correos y recordatorios; reintenta si fallan")
+  ContainerDb(bd, "Base de datos", "PostgreSQL (ADR-009, RT-04)", "Prácticas, reglas, enlaces y bitácora de auditoría")
+  ContainerDb(docs, "Repositorio de documentos", "Almacenamiento institucional de archivos (ADR-009)", "Actas en PDF y evidencias, sin borrado (RN-02)")
+}
+
+System_Ext(sia, "SIA", "Datos académicos (RT-03)")
+System_Ext(idp, "Proveedor de identidad institucional", "Inicio de sesión único (RT-02)")
+System_Ext(correo, "Servicio de correo institucional", "")
+
+Rel_D(estudiante, web, "usa", "HTTPS")
+Rel_D(docente, web, "usa", "HTTPS")
+Rel_D(director, web, "usa", "HTTPS")
+Rel_D(admin, web, "usa", "HTTPS")
+Rel_D(supervisor, web, "abre el enlace en", "HTTPS")
+
+Rel_R(web, idp, "redirige el inicio de sesión a", "OpenID Connect / HTTPS")
+Rel_D(web, api, "llama a", "JSON / HTTPS")
+Rel(api, idp, "valida el token con", "HTTPS")
+Rel_D(api, bd, "lee y escribe", "SQL")
+Rel_D(api, docs, "guarda y lee actas en", "HTTPS")
+Rel_L(api, broker, "publica verificaciones y correos en", "AMQP")
+Rel_D(broker, worker, "entrega mensajes a", "AMQP")
+Rel(worker, bd, "actualiza el estado de la postulación en", "SQL")
+Rel_D(worker, sia, "consulta requisitos académicos en", "HTTPS / REST")
+Rel_D(worker, correo, "envía correos por", "SMTP")
+Lay_R(sia, correo)
+Lay_R(bd, docs)
+Lay_R(worker, bd)
+@enduml

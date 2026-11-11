@@ -1,0 +1,120 @@
+@startuml 01-logica
+title Vista lógica (UML): modelo de dominio del Sistema de Gestión de Prácticas Empresariales
+
+hide circle
+hide methods
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+skinparam class {
+  BackgroundColor #FFFFFF
+  BorderColor #333333
+}
+
+class Programa {
+  nombre
+}
+class ReglaPractica {
+  periodo de vigencia
+  horas mínimas
+  requisitos académicos
+  plazo de evaluación
+}
+class Estudiante {
+  documento
+  nombre
+  correo institucional
+}
+class Postulacion {
+  fecha
+  estado
+}
+class VerificacionRequisitos {
+  número de intento
+  fecha
+  resultado
+}
+class Practica {
+  fecha de inicio
+  fecha de fin
+  estado
+}
+class Empresa {
+  nombre
+  NIT
+}
+class SupervisorEmpresa {
+  nombre
+  correo
+}
+class DocenteAsesor {
+  nombre
+  correo institucional
+}
+class RegistroHoras {
+  semana
+  horas
+  estado de validación
+}
+class Evaluacion {
+  fecha
+  nota
+  observaciones
+}
+class EnlaceAcceso {
+  propósito
+  fecha de emisión
+  fecha de vencimiento
+  estado
+}
+class Acta {
+  número
+  fecha de generación
+  estado
+}
+class PlantillaActa {
+  versión
+  vigente desde
+}
+class AprobacionActa {
+  rol del aprobador
+  fecha y hora
+  decisión
+}
+class EventoBitacora {
+  fecha y hora
+  usuario o enlace
+  acción
+  dirección de origen
+}
+
+Programa "1" -- "1..*" ReglaPractica : tiene versiones >
+Estudiante "1" -- "0..*" Postulacion : presenta >
+Postulacion "0..*" -- "1" ReglaPractica : se evalúa con >
+Postulacion "1" -- "0..*" VerificacionRequisitos : registra >
+Postulacion "1" -- "0..1" Practica : da origen a >
+Practica "0..*" -- "1" Empresa : se realiza en >
+SupervisorEmpresa "1..*" -- "1" Empresa : trabaja en >
+Practica "0..*" -- "1" SupervisorEmpresa : supervisa <
+Practica "0..*" -- "0..1" DocenteAsesor : asesora <
+Practica "1" -- "0..*" RegistroHoras : acumula >
+Practica "1" -- "0..1" Evaluacion : recibe >
+Practica "1" -- "0..*" EnlaceAcceso : emite >
+Practica "1" -- "0..*" Acta : cierra con >
+Acta "0..*" -- "1" PlantillaActa : se genera con >
+Acta "1" -- "0..2" AprobacionActa : requiere >
+EventoBitacora "0..*" -- "0..1" Practica : refiere a >
+
+note bottom of VerificacionRequisitos
+  Un intento por cada consulta al SIA;
+  se reintenta hasta que el SIA responde
+  (ADR-003, EAC-02)
+end note
+note bottom of EnlaceAcceso
+  Un solo uso, vence a los 15 días
+  (ADR-005, EAC-03)
+end note
+note bottom of EventoBitacora
+  Solo inserción: no se modifica
+  ni se borra (ADR-006)
+end note
+@enduml

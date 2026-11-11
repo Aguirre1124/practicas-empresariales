@@ -1,0 +1,38 @@
+@startuml cu10-aprobar-acta
+title ESC-04: CU-10 Aprobar el acta electrónicamente (diagrama de secuencia arquitectónico)
+' Participantes: los de la vista de procesos (docs/vistas/02-procesos.md)
+' Verifica: RT-02 y ADR-004 (inicio de sesión institucional y rol), ADR-006 (quién aprobó y cuándo), RN-02
+autonumber
+
+actor "Docente asesor" as doc
+actor "Director de programa" as dir
+participant "Aplicación web" as web
+participant "Proveedor de identidad institucional" as idp
+participant "API de prácticas" as api
+database "Base de datos" as bd
+
+doc -> web : abre el acta pendiente
+web -> idp : redirige el inicio de sesión (OpenID Connect / HTTPS)
+idp --> web : token de la cuenta institucional
+doc -> web : aprueba o rechaza el acta
+web -> api : envía la decisión (JSON / HTTPS, con token)
+api -> idp : valida el token (HTTPS)
+api -> bd : verifica que su rol le permite aprobar esta práctica (SQL, RN-01)
+
+alt aprueba
+  api -> bd : guarda la AprobacionActa y el evento en la bitácora: quién, cuándo y desde dónde (SQL)
+else rechaza con observaciones
+  api -> bd : guarda el rechazo, el acta vuelve a "en corrección" y registra el evento (SQL)
+end
+
+opt ya están las dos aprobaciones: docente asesor y director de programa
+  api -> bd : marca el Acta como "aprobada"; desde aquí no se modifica ni se borra (SQL, RN-02)
+end
+
+api --> web : decisión registrada (HTTPS)
+web --> doc : muestra el estado del acta
+
+note over dir, bd
+  El director de programa sigue el mismo flujo con su propia cuenta institucional
+end note
+@enduml

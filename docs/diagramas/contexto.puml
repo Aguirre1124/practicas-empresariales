@@ -1,0 +1,30 @@
+@startuml contexto
+!include <C4/C4_Context>
+
+title Contexto del sistema (C4, nivel 1): Sistema de Gestión de Prácticas Empresariales
+
+LAYOUT_WITH_LEGEND()
+
+Person(estudiante, "Estudiante", "Se postula, registra horas y consulta su trámite")
+Person(docente, "Docente asesor", "Revisa horas y avance; aprueba el acta")
+Person(director, "Director de programa", "Aprueba postulaciones, configura reglas y aprueba el acta")
+Person(admin, "Administrador del sistema", "Asigna roles y opera el sistema")
+Person_Ext(supervisor, "Supervisor de empresa", "Valida horas y evalúa al practicante, sin cuenta (RN-04)")
+
+System(sistema, "Sistema de Gestión de Prácticas Empresariales", "Gestiona postulación, seguimiento, evaluación y acta final de las prácticas")
+
+System_Ext(sia, "SIA", "Sistema de Información Académica: datos académicos del estudiante (RT-03)")
+System_Ext(idp, "Proveedor de identidad institucional", "Inicio de sesión único con la cuenta institucional (RT-02)")
+System_Ext(correo, "Servicio de correo institucional", "Envía notificaciones, recordatorios y enlaces")
+
+Rel_D(estudiante, sistema, "se postula y registra horas en", "HTTPS")
+Rel_D(docente, sistema, "revisa prácticas y aprueba actas en", "HTTPS")
+Rel_D(director, sistema, "configura reglas y aprueba actas en", "HTTPS")
+Rel_D(admin, sistema, "administra roles en", "HTTPS")
+Rel_L(supervisor, sistema, "valida horas y evalúa mediante enlace de un solo uso", "HTTPS")
+
+Rel_D(sistema, sia, "consulta requisitos académicos en", "HTTPS / REST")
+Rel_D(sistema, idp, "autentica usuarios institucionales con", "OpenID Connect / HTTPS")
+Rel_D(sistema, correo, "envía correos por", "SMTP")
+Rel_U(correo, supervisor, "entrega el enlace de evaluación a", "correo")
+@enduml

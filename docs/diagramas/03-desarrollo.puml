@@ -1,0 +1,107 @@
+@startuml 03-desarrollo
+!include <C4/C4_Component>
+
+title Vista de desarrollo (C4, nivel 3): componentes de la API de prácticas por capas de Clean Architecture
+
+LAYOUT_TOP_DOWN()
+skinparam linetype ortho
+skinparam nodesep 40
+skinparam ranksep 60
+
+
+Container(web, "Aplicación web", "Angular", "")
+ContainerQueue(broker_in, "Bróker de mensajes", "RabbitMQ", "")
+
+Container_Boundary(api, "API de prácticas [contenedor: monolito modular, ADR-001]; el Worker de integración ejecuta este mismo código") {
+
+  Boundary(entrada, "infraestructura: entrada") {
+    Component(rest, "Controlador REST", "adaptador de entrada", "Traduce las peticiones HTTP a casos de uso")
+    Component(identidad, "Adaptador de identidad", "adaptador de entrada", "Valida el token institucional y carga el rol (ADR-004)")
+    Component(consumidor, "Consumidor de mensajes", "adaptador de entrada (Worker)", "Toma mensajes y reintenta con espera creciente (ADR-003)")
+    Component(carga, "Carga inicial", "script de un solo uso", "PA-05: pendiente, declarado como riesgo")
+  }
+
+  Boundary(aplicacion, "aplicacion: casos de uso y puertos") {
+    Component(actas, "Módulo Actas", "caso de uso", "CU-09, CU-10, CU-14 (ADR-008)")
+    Component(postulaciones, "Módulo Postulaciones", "caso de uso", "CU-01, CU-02")
+    Component(seguimiento, "Módulo Seguimiento", "caso de uso", "CU-03 a CU-06, CU-11, CU-13")
+    Component(evaluacion, "Módulo Evaluación", "caso de uso", "CU-07")
+    Component(reglas, "Módulo Reglas", "caso de uso", "CU-12, reglas como datos (ADR-007)")
+    Component(acceso, "Módulo Acceso externo", "caso de uso", "Enlaces de un solo uso (ADR-005)")
+    Component(auditoria, "Módulo Auditoría", "caso de uso", "Bitácora de solo inserción (ADR-006)")
+    Component(puertos, "Puertos", "interfaces", "Repositorios, ConsultaAcademica, PublicadorMensajes, Notificador, GeneradorActa, RepositorioDocumentos")
+  }
+
+  Boundary(dom, "dominio") {
+    Component(dominio, "Dominio", "entidades", "Las entidades de la vista lógica")
+  }
+
+  Boundary(salida, "infraestructura: salida") {
+    Component(pg, "Adaptador PostgreSQL", "adaptador", "Repositorios (ADR-009)")
+    Component(pub, "Publicador de mensajes", "adaptador", "PublicadorMensajes (ADR-003)")
+    Component(adsia, "Adaptador SIA", "adaptador (Worker)", "ConsultaAcademica (ADR-002)")
+    Component(adcorreo, "Adaptador de correo", "adaptador (Worker)", "Notificador")
+    Component(pdf, "Generador de PDF", "adaptador", "GeneradorActa con plantilla (ADR-008)")
+    Component(archivos, "Adaptador de documentos", "adaptador", "RepositorioDocumentos (ADR-009)")
+  }
+}
+
+System_Ext(idp, "Proveedor de identidad institucional", "")
+ContainerDb(bd, "Base de datos", "PostgreSQL", "")
+ContainerQueue(broker_out, "Bróker de mensajes ", "RabbitMQ", "")
+System_Ext(sia, "SIA", "")
+System_Ext(correo, "Servicio de correo institucional", "")
+ContainerDb(docs, "Repositorio de documentos", "Almacenamiento institucional", "")
+
+Rel(web, rest, "llama a", "JSON / HTTPS")
+Rel(broker_in, consumidor, "entrega mensajes a", "AMQP")
+Rel_R(rest, identidad, "verifica el usuario con")
+Rel_U(identidad, idp, "valida el token con", "HTTPS")
+
+Rel(rest, actas, "invoca")
+Rel(rest, postulaciones, "invoca")
+Rel(rest, seguimiento, "invoca")
+Rel(rest, evaluacion, "invoca")
+Rel(rest, reglas, "invoca")
+Rel(consumidor, postulaciones, "ejecuta la verificación de")
+Rel(carga, postulaciones, "carga prácticas mediante")
+
+Rel_D(actas, seguimiento, "usa")
+Rel_D(actas, evaluacion, "usa")
+Rel_D(postulaciones, reglas, "usa")
+Rel_D(seguimiento, reglas, "usa")
+Rel_D(evaluacion, acceso, "usa")
+Rel_D(acceso, auditoria, "registra en")
+Rel_D(reglas, auditoria, "registra en")
+
+Rel_R(puertos, dominio, "se definen sobre")
+Rel(auditoria, dominio, "usa")
+
+Rel_U(pg, puertos, "implementa")
+Rel_U(pub, puertos, "implementa")
+Rel_U(adsia, puertos, "implementa")
+Rel_U(adcorreo, puertos, "implementa")
+Rel_U(pdf, puertos, "implementa")
+Rel_U(archivos, puertos, "implementa")
+
+Rel(pg, bd, "lee y escribe", "SQL")
+Rel(pub, broker_out, "publica en", "AMQP")
+Rel(adsia, sia, "consulta", "HTTPS / REST")
+Rel(adcorreo, correo, "envía", "SMTP")
+Rel(archivos, docs, "guarda PDF en", "HTTPS")
+
+Lay_R(rest, identidad)
+Lay_R(identidad, consumidor)
+Lay_R(consumidor, carga)
+Lay_R(actas, postulaciones)
+Lay_R(postulaciones, seguimiento)
+Lay_R(seguimiento, evaluacion)
+Lay_D(evaluacion, acceso)
+Lay_D(seguimiento, reglas)
+Lay_L(acceso, auditoria)
+Lay_R(pg, pub)
+Lay_R(pub, adsia)
+Lay_R(adsia, adcorreo)
+Lay_R(adcorreo, pdf)
+Lay_R(pdf, archivos)
+@enduml

@@ -1,0 +1,46 @@
+@startuml cu01-postularse
+title ESC-01: CU-01 Postularse a la práctica (diagrama de secuencia arquitectónico)
+' Participantes: los de la vista de procesos (docs/vistas/02-procesos.md)
+' Verifica: EAC-02 y ADR-003 (la API responde sin esperar al SIA), RT-03 y ADR-002 (solo servicios del SIA)
+autonumber
+
+actor "Estudiante" as est
+participant "Aplicación web" as web
+participant "API de prácticas" as api
+database "Base de datos" as bd
+queue "Bróker de mensajes" as broker
+participant "Worker de integración" as worker
+participant "SIA" as sia
+participant "Servicio de correo institucional" as correo
+
+est -> web : llena y envía la postulación
+web -> api : envía la postulación (JSON / HTTPS)
+api -> bd : guarda la Postulacion en estado "pendiente de verificación" (SQL)
+api -> broker : publica "verificar requisitos" (AMQP, cola persistente)
+api --> web : postulación recibida (HTTPS)
+web --> est : muestra "Recibida, estamos verificando tus requisitos"
+note right of api
+  La API responde sin esperar al SIA:
+  confirmación en menos de 3 s (EAC-02, ADR-003)
+end note
+
+broker -> worker : entrega "verificar requisitos" (AMQP)
+worker -> bd : lee la ReglaPractica del programa (SQL)
+
+loop mientras el SIA no responda
+  worker -> sia : consulta los datos académicos (HTTPS / REST, tiempo límite 5 s)
+  alt el SIA responde
+    sia --> worker : datos académicos del estudiante
+    worker -> bd : guarda la VerificacionRequisitos y el estado "cumple" o "no cumple" (SQL)
+  else el SIA no responde en 5 s
+    worker -> bd : guarda el intento fallido (SQL)
+    worker -> broker : devuelve el mensaje para reintentar con espera creciente (AMQP)
+    note right of broker
+      El mensaje sigue en la cola persistente:
+      ninguna postulación se pierde (EAC-02)
+    end note
+  end
+end
+
+worker -> correo : envía el resultado de la verificación al estudiante (SMTP)
+@enduml

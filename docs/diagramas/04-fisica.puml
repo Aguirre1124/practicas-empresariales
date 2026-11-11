@@ -1,0 +1,46 @@
+@startuml 04-fisica
+!include <C4/C4_Deployment>
+
+title Vista física (C4, despliegue): Sistema de Gestión de Prácticas Empresariales
+
+LAYOUT_WITH_LEGEND()
+
+Deployment_Node(navegador, "Navegador o celular", "Estudiantes, docentes asesores, directores y supervisores") {
+  Container(web_cliente, "Aplicación web", "Angular, ejecutándose en el navegador", "")
+}
+
+Deployment_Node(cd, "Centro de datos de la Universidad (RT-01)", "Infraestructura administrada por el Área de Sistemas") {
+  Deployment_Node(srvweb, "Servidor web", "Ubuntu, Nginx") {
+    Container(web, "Aplicación web", "Angular, archivos estáticos", "También hace de proxy inverso hacia la API")
+  }
+  Deployment_Node(srvapp, "Servidor de aplicaciones", "Ubuntu, Docker") {
+    Container(api, "API de prácticas", "Python", "Monolito modular (ADR-001)")
+    Container(worker, "Worker de integración", "Python", "Reintenta verificaciones y correos (ADR-003)")
+  }
+  Deployment_Node(srvmsg, "Servidor de mensajería", "Ubuntu") {
+    ContainerQueue(broker, "Bróker de mensajes", "RabbitMQ", "Colas persistentes: los mensajes sobreviven a un reinicio (EAC-02)")
+  }
+  Deployment_Node(srvbd, "Servidor de base de datos", "Ubuntu, PostgreSQL (RT-04)") {
+    ContainerDb(bd, "Base de datos", "PostgreSQL", "Solo accesible desde la red interna (RN-01)")
+  }
+  Deployment_Node(alm, "Almacenamiento institucional", "Servidor de archivos con respaldo") {
+    ContainerDb(docs, "Repositorio de documentos", "Archivos", "Sin borrado durante la retención (RN-02)")
+  }
+}
+
+System_Ext(sia, "SIA", "En la red institucional (RT-03)")
+System_Ext(idp, "Proveedor de identidad institucional", "RT-02")
+System_Ext(correo, "Servicio de correo institucional", "")
+
+Rel_D(web_cliente, web, "descarga la interfaz y llama a la API por", "HTTPS, internet")
+Rel_R(web_cliente, idp, "inicia sesión en", "OpenID Connect / HTTPS")
+Rel_D(web, api, "reenvía las peticiones a", "HTTPS, red interna")
+Rel_R(api, broker, "publica en", "AMQP, red interna")
+Rel_L(broker, worker, "entrega mensajes a", "AMQP, red interna")
+Rel_D(api, bd, "lee y escribe", "SQL, red interna")
+Rel_D(worker, bd, "actualiza estados en", "SQL, red interna")
+Rel_D(api, docs, "guarda y lee actas en", "HTTPS, red interna")
+Rel_R(worker, sia, "consulta requisitos en", "HTTPS / REST, red institucional")
+Rel_R(worker, correo, "envía correos por", "SMTP, red institucional")
+Rel_R(api, idp, "valida el token con", "HTTPS")
+@enduml

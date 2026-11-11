@@ -1,0 +1,34 @@
+@startuml cu07-evaluar-practicante
+title ESC-02: CU-07 Evaluar el desempeño del practicante (diagrama de secuencia arquitectónico)
+' Participantes: los de la vista de procesos (docs/vistas/02-procesos.md)
+' Verifica: EAC-03, RN-04 y ADR-005 (enlace de un solo uso), ADR-006 (bitácora)
+autonumber
+
+actor "Supervisor de empresa" as sup
+participant "Servicio de correo institucional" as correo
+participant "Aplicación web" as web
+participant "API de prácticas" as api
+database "Base de datos" as bd
+
+correo -> sup : entrega el enlace de evaluación (correo)
+sup -> web : abre el enlace, sin usuario ni contraseña (HTTPS)
+web -> api : envía el identificador del enlace (JSON / HTTPS)
+api -> bd : busca el EnlaceAcceso (SQL)
+
+alt enlace vigente: no usado y con menos de 15 días
+  api --> web : formulario con los datos de la práctica (HTTPS)
+  web --> sup : muestra el formulario de evaluación
+  sup -> web : diligencia y envía la evaluación
+  web -> api : envía la evaluación (JSON / HTTPS)
+  api -> bd : guarda la Evaluacion, marca el enlace como "usado" y registra el evento (SQL, una sola transacción)
+  api --> web : evaluación registrada
+  web --> sup : muestra la confirmación
+else enlace usado, vencido o alterado
+  api -> bd : registra en la bitácora el intento rechazado con fecha, hora y dirección de origen (SQL)
+  note right of bd
+    Registro en menos de 1 minuto (EAC-03, ADR-006)
+  end note
+  api --> web : acceso rechazado, sin datos personales (HTTPS)
+  web --> sup : muestra "Enlace no válido; solicite uno nuevo a la Facultad"
+end
+@enduml

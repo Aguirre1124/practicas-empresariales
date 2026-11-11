@@ -1,0 +1,32 @@
+@startuml cu09-generar-acta
+title ESC-03: CU-09 Generar el acta final (diagrama de secuencia arquitectónico)
+' Participantes: los de la vista de procesos (docs/vistas/02-procesos.md)
+' Verifica: RN-03 y ADR-008 (plantilla), RN-02 y ADR-009 (almacenamiento sin borrado), OB-04 (sin retranscripción)
+autonumber
+
+actor "Docente asesor" as doc
+participant "Aplicación web" as web
+participant "API de prácticas" as api
+database "Base de datos" as bd
+database "Repositorio de documentos" as docs
+
+doc -> web : solicita generar el acta de la práctica
+web -> api : solicita el acta (JSON / HTTPS, con token institucional)
+api -> bd : lee horas validadas, evaluación y la PlantillaActa vigente (SQL)
+
+break faltan horas por validar o falta la evaluación del supervisor
+  api --> web : no se puede generar: indica qué falta (HTTPS)
+  web --> doc : muestra lo que falta
+end
+
+api -> api : llena la plantilla con los datos de la práctica y la convierte a PDF
+note right of api
+  El formato sale de la plantilla, no del código
+  (RN-03, ADR-008). No hay datos digitados a mano (OB-04)
+end note
+api -> docs : guarda el PDF del acta (HTTPS, sin borrado)
+api -> bd : guarda el Acta en estado "pendiente de aprobación" con la versión de plantilla usada (SQL)
+api -> bd : registra el evento en la bitácora (SQL)
+api --> web : acta generada (HTTPS)
+web --> doc : muestra el PDF para revisión
+@enduml
