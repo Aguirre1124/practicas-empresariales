@@ -131,7 +131,7 @@
       Escenarios: 1, 2
       Depende de: T-12
 
-- [ ] T-26 Implementar adaptador `PublicadorMensajesMemoria` con cola persistente simulada y espera creciente
+- [x] T-26 Implementar adaptador `PublicadorMensajesMemoria` con cola persistente simulada y espera creciente
       Archivos: `src/infraestructura/mensajeria/publicador_mensajes_memoria.py`
       Escenarios: 1, 2, 6
       Depende de: T-15
