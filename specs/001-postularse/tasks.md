@@ -37,7 +37,7 @@
       Escenarios: 1, 2, 6
       Depende de: ninguna
 
-- [ ] T-08 Crear entidad `Postulacion` con sus reglas de transición de estado y registro de verificaciones
+- [x] T-08 Crear entidad `Postulacion` con sus reglas de transición de estado y registro de verificaciones
       Archivos: `src/dominio/postulacion.py`
       Escenarios: 1, 2, 3, 4, 6
       Depende de: T-01, T-03, T-04, T-05, T-06, T-07
