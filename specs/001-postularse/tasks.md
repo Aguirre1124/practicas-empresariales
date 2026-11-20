@@ -158,7 +158,7 @@
 
 ## Validación
 
-- [ ] T-31 Validar los escenarios de `spec.md` y la regla de dependencia en `validacion.md`
+- [x] T-31 Validar los escenarios de `spec.md` y la regla de dependencia en `validacion.md`
       Archivos: `specs/001-postularse/validacion.md`
       Escenarios: 1, 2, 3, 4, 5, 6
       Depende de: T-30
