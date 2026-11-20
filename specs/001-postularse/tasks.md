@@ -79,7 +79,7 @@
       Escenarios: 1, 2, 6
       Depende de: ninguna
 
-- [ ] T-16 Definir puerto `Notificador` para el envío de resultados por correo al estudiante
+- [x] T-16 Definir puerto `Notificador` para el envío de resultados por correo al estudiante
       Archivos: `src/aplicacion/puertos/notificador.py`
       Escenarios: 1, 2
       Depende de: ninguna
