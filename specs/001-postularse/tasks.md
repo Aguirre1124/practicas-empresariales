@@ -136,7 +136,7 @@
       Escenarios: 1, 2, 6
       Depende de: T-15
 
-- [ ] T-27 Implementar adaptador `ConsumidorMensajesVerificacion` del worker
+- [x] T-27 Implementar adaptador `ConsumidorMensajesVerificacion` del worker
       Archivos: `src/infraestructura/mensajeria/consumidor_mensajes_verificacion.py`
       Escenarios: 1, 2, 6
       Depende de: T-22, T-26
