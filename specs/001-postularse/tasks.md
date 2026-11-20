@@ -42,7 +42,7 @@
       Escenarios: 1, 2, 3, 4, 6
       Depende de: T-01, T-03, T-04, T-05, T-06, T-07
 
-- [ ] T-09 Crear entidad inmutable `EventoBitacora` para auditoría de solo inserción
+- [x] T-09 Crear entidad inmutable `EventoBitacora` para auditoría de solo inserción
       Archivos: `src/dominio/evento_bitacora.py`
       Escenarios: 1, 2
       Depende de: ninguna
