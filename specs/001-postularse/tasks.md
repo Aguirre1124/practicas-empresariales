@@ -126,7 +126,7 @@
       Escenarios: 1, 2, 4, 6
       Depende de: T-11
 
-- [ ] T-25 Implementar adaptador en memoria de solo inserción `RepositorioBitacoraMemoria`
+- [x] T-25 Implementar adaptador en memoria de solo inserción `RepositorioBitacoraMemoria`
       Archivos: `src/infraestructura/persistencia/repositorio_bitacora_memoria.py`
       Escenarios: 1, 2
       Depende de: T-12
