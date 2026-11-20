@@ -116,7 +116,7 @@
 
 ## Capa de infraestructura y composición
 
-- [ ] T-23 Implementar adaptador en memoria `RepositorioPostulacionesMemoria`
+- [x] T-23 Implementar adaptador en memoria `RepositorioPostulacionesMemoria`
       Archivos: `src/infraestructura/persistencia/repositorio_postulaciones_memoria.py`
       Escenarios: 1, 2, 3, 4, 6
       Depende de: T-10
