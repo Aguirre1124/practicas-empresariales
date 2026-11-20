@@ -59,7 +59,7 @@
       Escenarios: 1, 2, 4, 6
       Depende de: T-03
 
-- [ ] T-12 Definir puerto de solo inserción `RepositorioBitacora`
+- [x] T-12 Definir puerto de solo inserción `RepositorioBitacora`
       Archivos: `src/aplicacion/puertos/repositorio_bitacora.py`
       Escenarios: 1, 2
       Depende de: T-09
