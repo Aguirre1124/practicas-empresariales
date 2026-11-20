@@ -12,7 +12,7 @@
       Escenarios: 1, 2, 4, 6
       Depende de: ninguna
 
-- [ ] T-03 Crear entidad `ReglaPractica` con evaluación de porcentaje mínimo de créditos y matrícula activa
+- [x] T-03 Crear entidad `ReglaPractica` con evaluación de porcentaje mínimo de créditos y matrícula activa
       Archivos: `src/dominio/regla_practica.py`
       Escenarios: 1, 2, 4, 6
       Depende de: T-02
