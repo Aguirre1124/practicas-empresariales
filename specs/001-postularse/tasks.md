@@ -104,7 +104,7 @@
       Escenarios: 1, 2, 3, 4, 5, 6
       Depende de: ninguna
 
-- [ ] T-21 Implementar caso de uso `PostularsePractica` (control de duplicados, validación de empresa, guardado pendiente y confirmación rápida)
+- [x] T-21 Implementar caso de uso `PostularsePractica` (control de duplicados, validación de empresa, guardado pendiente y confirmación rápida)
       Archivos: `src/aplicacion/postulaciones/postularse_practica.py`
       Escenarios: 1, 2, 3, 4, 5, 6
       Depende de: T-08, T-10, T-15, T-17, T-18, T-19, T-20
