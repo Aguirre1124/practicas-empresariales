@@ -99,7 +99,7 @@
       Escenarios: 1, 2, 3, 4, 5, 6
       Depende de: ninguna
 
-- [ ] T-20 Crear DTO de salida `RespuestaPostulacionDTO`
+- [x] T-20 Crear DTO de salida `RespuestaPostulacionDTO`
       Archivos: `src/aplicacion/postulaciones/respuesta_postulacion_dto.py`
       Escenarios: 1, 2, 3, 4, 5, 6
       Depende de: ninguna
