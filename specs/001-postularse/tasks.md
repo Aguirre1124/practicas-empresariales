@@ -69,7 +69,7 @@
       Escenarios: 1, 2, 6
       Depende de: ninguna
 
-- [ ] T-14 Definir puerto `ConsultaAcademica` hacia los servicios del SIA
+- [x] T-14 Definir puerto `ConsultaAcademica` hacia los servicios del SIA
       Archivos: `src/aplicacion/puertos/consulta_academica.py`
       Escenarios: 1, 2, 6
       Depende de: T-13
