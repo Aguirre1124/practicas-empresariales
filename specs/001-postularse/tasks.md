@@ -64,7 +64,7 @@
       Escenarios: 1, 2
       Depende de: T-09
 
-- [ ] T-13 Crear DTO `DatosAcademicosDTO` con los datos devueltos por la consulta académica
+- [x] T-13 Crear DTO `DatosAcademicosDTO` con los datos devueltos por la consulta académica
       Archivos: `src/aplicacion/postulaciones/datos_academicos_dto.py`
       Escenarios: 1, 2, 6
       Depende de: ninguna
