@@ -141,7 +141,7 @@
       Escenarios: 1, 2, 6
       Depende de: T-22, T-26
 
-- [ ] T-28 Implementar adaptador `AdaptadorSIAMemoria` con simulación de respuesta académica y falla de tiempo límite de 5 s (`EAC-02`)
+- [x] T-28 Implementar adaptador `AdaptadorSIAMemoria` con simulación de respuesta académica y falla de tiempo límite de 5 s (`EAC-02`)
       Archivos: `src/infraestructura/sia/adaptador_sia_memoria.py`
       Escenarios: 1, 2, 6
       Depende de: T-14
