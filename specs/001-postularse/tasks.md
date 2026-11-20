@@ -89,7 +89,7 @@
       Escenarios: 1, 2
       Depende de: T-09, T-12
 
-- [ ] T-18 Implementar componente `ObtenerReglaVigente` del Módulo Reglas
+- [x] T-18 Implementar componente `ObtenerReglaVigente` del Módulo Reglas
       Archivos: `src/aplicacion/reglas/obtener_regla_vigente.py`
       Escenarios: 1, 2, 4, 6
       Depende de: T-03, T-11
