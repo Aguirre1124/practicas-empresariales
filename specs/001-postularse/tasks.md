@@ -121,7 +121,7 @@
       Escenarios: 1, 2, 3, 4, 6
       Depende de: T-10
 
-- [ ] T-24 Implementar adaptador en memoria `RepositorioReglasPracticaMemoria`
+- [x] T-24 Implementar adaptador en memoria `RepositorioReglasPracticaMemoria`
       Archivos: `src/infraestructura/persistencia/repositorio_reglas_practica_memoria.py`
       Escenarios: 1, 2, 4, 6
       Depende de: T-11
