@@ -17,7 +17,7 @@
       Escenarios: 1, 2, 4, 6
       Depende de: T-02
 
-- [ ] T-04 Crear entidad `Estudiante` vinculada a su `Programa`
+- [x] T-04 Crear entidad `Estudiante` vinculada a su `Programa`
       Archivos: `src/dominio/estudiante.py`
       Escenarios: 1, 2, 3, 4, 5, 6
       Depende de: T-02
