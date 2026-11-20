@@ -94,7 +94,7 @@
       Escenarios: 1, 2, 4, 6
       Depende de: T-03, T-11
 
-- [ ] T-19 Crear DTO de entrada `SolicitudPostulacionDTO`
+- [x] T-19 Crear DTO de entrada `SolicitudPostulacionDTO`
       Archivos: `src/aplicacion/postulaciones/solicitud_postulacion_dto.py`
       Escenarios: 1, 2, 3, 4, 5, 6
       Depende de: ninguna
