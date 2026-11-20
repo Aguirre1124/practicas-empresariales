@@ -7,7 +7,7 @@
       Escenarios: 1, 2, 3, 4, 6
       Depende de: ninguna
 
-- [ ] T-02 Crear entidad `Programa`
+- [x] T-02 Crear entidad `Programa`
       Archivos: `src/dominio/programa.py`
       Escenarios: 1, 2, 4, 6
       Depende de: ninguna
