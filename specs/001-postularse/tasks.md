@@ -32,7 +32,7 @@
       Escenarios: 1, 2, 4, 5, 6
       Depende de: T-05
 
-- [ ] T-07 Crear entidad `VerificacionRequisitos` para registrar cada intento de consulta al SIA
+- [x] T-07 Crear entidad `VerificacionRequisitos` para registrar cada intento de consulta al SIA
       Archivos: `src/dominio/verificacion_requisitos.py`
       Escenarios: 1, 2, 6
       Depende de: ninguna
