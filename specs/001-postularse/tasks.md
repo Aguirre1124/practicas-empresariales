@@ -49,7 +49,7 @@
 
 ## Capa de aplicación (puertos y casos de uso)
 
-- [ ] T-10 Definir puerto `RepositorioPostulaciones`
+- [x] T-10 Definir puerto `RepositorioPostulaciones`
       Archivos: `src/aplicacion/puertos/repositorio_postulaciones.py`
       Escenarios: 1, 2, 3, 4, 6
       Depende de: T-08
