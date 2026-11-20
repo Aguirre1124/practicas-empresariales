@@ -84,7 +84,7 @@
       Escenarios: 1, 2
       Depende de: ninguna
 
-- [ ] T-17 Implementar componente `RegistrarEventoBitacora` del Módulo Auditoría
+- [x] T-17 Implementar componente `RegistrarEventoBitacora` del Módulo Auditoría
       Archivos: `src/aplicacion/auditoria/registrar_evento_bitacora.py`
       Escenarios: 1, 2
       Depende de: T-09, T-12
