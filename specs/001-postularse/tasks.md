@@ -2,7 +2,7 @@
 
 ## Capa de dominio
 
-- [ ] T-01 Definir `EstadoPostulacion` y los estados considerados en trámite
+- [x] T-01 Definir `EstadoPostulacion` y los estados considerados en trámite
       Archivos: `src/dominio/estado_postulacion.py`
       Escenarios: 1, 2, 3, 4, 6
       Depende de: ninguna
