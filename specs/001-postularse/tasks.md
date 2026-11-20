@@ -54,7 +54,7 @@
       Escenarios: 1, 2, 3, 4, 6
       Depende de: T-08
 
-- [ ] T-11 Definir puerto `RepositorioReglasPractica`
+- [x] T-11 Definir puerto `RepositorioReglasPractica`
       Archivos: `src/aplicacion/puertos/repositorio_reglas_practica.py`
       Escenarios: 1, 2, 4, 6
       Depende de: T-03
