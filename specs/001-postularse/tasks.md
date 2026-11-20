@@ -146,7 +146,7 @@
       Escenarios: 1, 2, 6
       Depende de: T-14
 
-- [ ] T-29 Implementar adaptador `AdaptadorCorreoMemoria` para notificaciones al estudiante
+- [x] T-29 Implementar adaptador `AdaptadorCorreoMemoria` para notificaciones al estudiante
       Archivos: `src/infraestructura/notificaciones/adaptador_correo_memoria.py`
       Escenarios: 1, 2
       Depende de: T-16
