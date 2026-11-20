@@ -74,7 +74,7 @@
       Escenarios: 1, 2, 6
       Depende de: T-13
 
-- [ ] T-15 Definir puerto `PublicadorMensajes` para encolar y reencolar verificaciones pendientes
+- [x] T-15 Definir puerto `PublicadorMensajes` para encolar y reencolar verificaciones pendientes
       Archivos: `src/aplicacion/puertos/publicador_mensajes.py`
       Escenarios: 1, 2, 6
       Depende de: ninguna
