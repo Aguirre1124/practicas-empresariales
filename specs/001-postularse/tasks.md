@@ -27,7 +27,7 @@
       Escenarios: 1, 2, 4, 5, 6
       Depende de: ninguna
 
-- [ ] T-06 Crear entidad `SupervisorEmpresa` con validación de nombre y correo obligatorios
+- [x] T-06 Crear entidad `SupervisorEmpresa` con validación de nombre y correo obligatorios
       Archivos: `src/dominio/supervisor_empresa.py`
       Escenarios: 1, 2, 4, 5, 6
       Depende de: T-05
