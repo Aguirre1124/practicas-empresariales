@@ -151,7 +151,7 @@
       Escenarios: 1, 2
       Depende de: T-16
 
-- [ ] T-30 Implementar raíz de composición `ContenedorPostulaciones`
+- [x] T-30 Implementar raíz de composición `ContenedorPostulaciones`
       Archivos: `src/infraestructura/composicion/contenedor_postulaciones.py`
       Escenarios: 1, 2, 3, 4, 5, 6
       Depende de: T-21, T-22, T-23, T-24, T-25, T-26, T-27, T-28, T-29
