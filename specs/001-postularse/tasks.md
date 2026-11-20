@@ -22,7 +22,7 @@
       Escenarios: 1, 2, 3, 4, 5, 6
       Depende de: T-02
 
-- [ ] T-05 Crear entidad `Empresa` con validación de nombre obligatorio y formato válido de NIT
+- [x] T-05 Crear entidad `Empresa` con validación de nombre obligatorio y formato válido de NIT
       Archivos: `src/dominio/empresa.py`
       Escenarios: 1, 2, 4, 5, 6
       Depende de: ninguna
