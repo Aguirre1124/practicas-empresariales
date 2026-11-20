@@ -109,7 +109,7 @@
       Escenarios: 1, 2, 3, 4, 5, 6
       Depende de: T-08, T-10, T-15, T-17, T-18, T-19, T-20
 
-- [ ] T-22 Implementar caso de uso `VerificarRequisitosPostulacion` (consulta al SIA, evaluación de reglas, manejo de fallas con reintento, bitácora y notificación)
+- [x] T-22 Implementar caso de uso `VerificarRequisitosPostulacion` (consulta al SIA, evaluación de reglas, manejo de fallas con reintento, bitácora y notificación)
       Archivos: `src/aplicacion/postulaciones/verificar_requisitos_postulacion.py`
       Escenarios: 1, 2, 6
       Depende de: T-08, T-10, T-14, T-15, T-16, T-17
