@@ -172,7 +172,7 @@ Lenguaje ubicuo del dominio: cada concepto tiene un único término en la docume
 | **Regla de práctica** | Conjunto de requisitos académicos, horas mínimas y plazos de evaluación vigentes para un programa en un periodo (`ADR-007`). | `ReglaPractica` |
 | **Estudiante** | Estudiante de la Facultad que se postula a la práctica, registra sus horas semanales y consulta su trámite. Solo ve su propia información (`RN-01`). | `Estudiante` |
 | **Postulación** | Solicitud que presenta el estudiante ante la Facultad para iniciar su práctica empresarial (`CU-01`, `CU-02`). | `Postulacion` |
-| **Estado de la postulación** | Situación de la postulación: `PENDIENTE_VERIFICACION`, `CUMPLE_REQUISITOS`, `NO_CUMPLE`, `APROBADA` o `RECHAZADA`. | `EstadoPostulacion` |
+| **Estado de la postulación** | Situación de la postulación: `PENDIENTE_VERIFICACION`, `CUMPLE_REQUISITOS`, `NO_CUMPLE_REQUISITOS`, `APROBADA` o `RECHAZADA`. | `EstadoPostulacion` |
 | **Verificación de requisitos** | Cada intento de consulta al SIA para comprobar si el estudiante cumple las reglas de práctica de su programa (`ADR-002`, `ADR-003`). | `VerificacionRequisitos` |
 | **Práctica** | Práctica empresarial en curso, originada por una postulación aprobada y ligada a la versión de reglas con la que empezó (`OB-05`). | `Practica` |
 | **Estado de la práctica** | Situación de la práctica empresarial: `EN_CURSO`, `HORAS_CUMPLIDAS`, `EVALUADA` o `CERRADA`. | `EstadoPractica` |
